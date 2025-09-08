@@ -1,5 +1,6 @@
 import "./App.css";
 import FlipBook from "./components/Flipbook";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 
 const samplePages = [
@@ -18,6 +19,7 @@ export default function App() {
     <>
       <Header />
       <FlipBook pages={samplePages} />
+      <Footer/>
     </>
   );
 }
