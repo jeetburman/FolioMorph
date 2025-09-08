@@ -6,6 +6,7 @@ const Header = () => {
     <div>
       <div>FOLIOMORPH</div>
       <div>
+        <button>Log in</button>
         <button>sign up</button>
       </div>
     </div>
