@@ -1,6 +1,6 @@
-
-import './App.css'
-import FlipBook from './components/Flipbook';
+import "./App.css";
+import FlipBook from "./components/Flipbook";
+import Header from "./components/Header";
 
 const samplePages = [
   { content: "📖 Cover Page", color: "bg-yellow-200" },
@@ -11,15 +11,13 @@ const samplePages = [
   { content: "🛠 Page 2: Features", color: "bg-blue-200" },
   { content: "🚀 Page 3: Deployment", color: "bg-pink-200" },
   { content: "🏁 The End", color: "bg-red-200" },
-]
-
+];
 
 export default function App() {
-
   return (
     <>
-      <FlipBook pages={samplePages}/>
+      <Header />
+      <FlipBook pages={samplePages} />
     </>
   );
 }
-
