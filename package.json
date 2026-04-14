@@ -1,0 +1,27 @@
+{
+  "name": "foliomorph",
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "description": "An end to end app which converts all your pdf uploads\r to magnificent flipbooks.",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeetburman/FolioMorph.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeetburman/FolioMorph/issues"
+  },
+  "homepage": "https://github.com/jeetburman/FolioMorph#readme"
+}

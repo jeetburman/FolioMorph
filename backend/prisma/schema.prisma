@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Flipbook {
+  id             String         @id @default(uuid())
+  slug           String         @unique
+  title          String
+  originalPdfUrl String
+  pageCount      Int            @default(0)
+  status         FlipbookStatus @default(PENDING)
+  createdAt      DateTime       @default(now())
+  pages          Page[]
+}
+
+model Page {
+  id         String   @id @default(uuid())
+  flipbookId String
+  pageNumber Int
+  imageUrl   String
+  flipbook   Flipbook @relation(fields: [flipbookId], references: [id], onDelete: Cascade)
+}
+
+enum FlipbookStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
