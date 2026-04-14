@@ -1,10 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 import * as fs from 'fs';
-import * as path from 'path';
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
+  process.env.SUPABASE_SERVICE_KEY!,
+  {
+    auth: {
+      persistSession: false,
+    },
+  }
 );
 
 const BUCKET = process.env.SUPABASE_BUCKET!;
@@ -15,13 +19,15 @@ export async function uploadFileToStorage(
   contentType: string
 ): Promise<string> {
   const fileBuffer = fs.readFileSync(localFilePath);
+  const uint8Array = new Uint8Array(fileBuffer);
 
   const { error } = await supabase.storage
     .from(BUCKET)
-    .upload(storagePath, fileBuffer, {
+    .upload(storagePath, uint8Array, {
       contentType,
       upsert: true,
-    });
+      duplex: 'half',
+    } as any);
 
   if (error) throw new Error(`Storage upload failed: ${error.message}`);
 

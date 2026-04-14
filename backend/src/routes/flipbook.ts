@@ -5,14 +5,20 @@ import { upload } from '../middleware/upload';
 import { prisma } from '../services/prisma';
 import { uploadFileToStorage } from '../services/storage';
 import { PDFJobData } from '../workers/pdfProcessor';
-import { fromPath } from 'pdf2pic';
-import path from 'path';
+import fs from 'fs';
 
 const router = Router();
 
+const redisUrl = new URL(process.env.REDIS_URL!);
 const connection = {
-  host: process.env.REDIS_URL?.replace('redis://', '').split(':')[0] || 'localhost',
-  port: parseInt(process.env.REDIS_URL?.split(':').pop() || '6379'),
+  host: redisUrl.hostname,
+  port: parseInt(redisUrl.port),
+  password: redisUrl.password,
+  tls: {
+    rejectUnauthorized: false,
+  },
+  enableTLSForSentinelMode: false,
+  maxRetriesPerRequest: null,
 };
 
 const pdfQueue = new Queue<PDFJobData>('pdf-processing', { connection });
@@ -31,14 +37,14 @@ function generateSlug(title: string): string {
 
 // Get page count from PDF
 async function getPdfPageCount(filePath: string): Promise<number> {
-  const convert = fromPath(filePath, {
-    density: 72,
-    saveFilename: 'temp',
-    savePath: path.dirname(filePath),
-    format: 'png',
-  });
-  const info = await convert.bulk(-1, { responseType: 'buffer' });
-  return Array.isArray(info) ? info.length : 1;
+  const buffer = fs.readFileSync(filePath);
+  const content = buffer.toString('latin1');
+  const matches = content.match(/\/Type[\s]*\/Page[^s]/g);
+  if (matches && matches.length > 0) return matches.length;
+  // fallback
+  const countMatch = content.match(/\/Count\s+(\d+)/);
+  if (countMatch) return parseInt(countMatch[1]);
+  return 1;
 }
 
 // POST /api/flipbooks/upload

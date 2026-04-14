@@ -5,9 +5,16 @@ import fs from 'fs';
 import { prisma } from '../services/prisma';
 import { uploadFileToStorage } from '../services/storage';
 
+const redisUrl = new URL(process.env.REDIS_URL!);
 const connection = {
-  host: process.env.REDIS_URL?.replace('redis://', '').split(':')[0] || 'localhost',
-  port: parseInt(process.env.REDIS_URL?.split(':').pop() || '6379'),
+  host: redisUrl.hostname,
+  port: parseInt(redisUrl.port),
+  password: redisUrl.password,
+  tls: {
+    rejectUnauthorized: false,
+  },
+  enableTLSForSentinelMode: false,
+  maxRetriesPerRequest: null,
 };
 
 export interface PDFJobData {
