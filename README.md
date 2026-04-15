@@ -2,7 +2,7 @@
 
 > Transform any PDF into a decent, animated flipbook with real page-turn physics, sound, and embeddable sharing.
 
-![FolioMorph Architecture](./assets/foliomorph_architecture.png)
+![FolioMorph Architecture](./assets/foliomorph_architecture.svg)
 
 ---
 
