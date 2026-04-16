@@ -1,6 +1,8 @@
 import ProcessingStatus from '@/components/ProcessingStatus';
 
-export default function ProcessingPage({ params }: { params: { slug: string } }) {
+export default async function ProcessingPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+
   return (
     <div style={{ minHeight: '100vh', paddingTop: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5rem 1.5rem 2rem' }}>
       <div style={{ width: '100%', maxWidth: 600 }}>
@@ -12,7 +14,7 @@ export default function ProcessingPage({ params }: { params: { slug: string } })
             This usually takes 20–60 seconds. You&apos;ll be redirected automatically.
           </p>
         </div>
-        <ProcessingStatus slug={params.slug} />
+        <ProcessingStatus slug={slug} />
       </div>
     </div>
   );
