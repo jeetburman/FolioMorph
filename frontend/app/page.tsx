@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { BookOpen, Share2, Download, Zap } from 'lucide-react';
-import FlipbookDemo from '@/components/FlipbookDemo';
+import DemoFlipbook from '@/components/DemoFlipbook'
 
 export default function HomePage() {
   return (
@@ -51,13 +51,28 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right — Demo */}
-          <div className="animate-fade-up delay-200" style={{ display: 'flex', justifyContent: 'center' }}>
-            <div className="card" style={{ padding: '1.5rem', maxWidth: 340, width: '100%' }}>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem', textAlign: 'center', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Live demo</div>
-              <FlipbookDemo />
-            </div>
+          {/* Right — live demo flipbook */}
+          <div className="fade-up-2" style={{
+            background: '#12102a',
+            borderRadius: 20,
+            padding: '32px 24px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 12,
+            minHeight: 320,
+            justifyContent: 'center',
+            border: '0.5px solid rgba(99,102,241,0.2)',
+          }}>
+            <p style={{
+              fontSize: 11, color: 'rgba(255,255,255,0.3)',
+              letterSpacing: '0.07em', textTransform: 'uppercase',
+            }}>
+              Live demo
+            </p>
+            <DemoFlipbook />
           </div>
+
         </div>
       </section>
 
